@@ -151,17 +151,6 @@ df.test$predicted_outcome <- ifelse((df.test$predicted_prob > accData$CUTOFF[row
 conf.matrix.test <- caret::confusionMatrix(df.test$predicted_outcome, df.test$left)
 conf.matrix.test
 
-#Feature selection via Backward Selection for Logistic Rgression (Recursive Feature Elimination)
-set.seed(123457)
-train_index <- caret::createDataPartition(df$department, p = 0.7, list = FALSE)
-df.train <- df[train_index,]
-df.test <- df[-train_index,]
-
-control <- caret::rfeControl(functions = lmFuncs, method = "cv", number = 10)
-results <- caret::rfe(df.train[,-(which(colnames(df.train) == "left"))], df.train$left, rfeControl = control, verbose = TRUE)
-print(results)
-ggplot(data = results) + geom_line()
-
 
 #With dummy variables
 set.seed(123457)
@@ -258,7 +247,7 @@ df.train <- df[train_index,]
 df.test <- df[-train_index,]
 
 control <- caret::rfeControl(functions = rfFuncs, method = "cv", number = 10)
-results <- caret::rfe(df.train[,-(which(colnames(df.train) == "left"))], size = c(1:9), df.train$left, rfeControl = control, verbose = TRUE)
+results <- caret::rfe(df.train[,-(which(colnames(df.train) == "left"))], df.train$left, sizes = c(1:9), rfeControl = control, verbose = TRUE)
 print(results)
 ggplot(data = results) + geom_line()
 
