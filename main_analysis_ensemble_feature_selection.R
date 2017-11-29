@@ -3,6 +3,7 @@ library(ggplot2)
 library(dummies)
 library(pROC)
 library(randomForest)
+library(data.table)
 
 #Importing dataset
 df <- read.csv("HR_data.csv", header = TRUE)
@@ -46,6 +47,13 @@ print(results)
 ggplot(data = results) + geom_line()
 vars.imp <- randomForest::importance(results$fit)
 print(vars.imp)
+
+imp <- setDT(data.frame(vars.imp), keep.rownames = TRUE)
+colnames(imp) <- c("Feature", "Mean_Decrease_Gini")
+imp <- imp[order(imp$Mean_Decrease_Gini, decreasing = TRUE),]
+print(imp)
+ggplot(data = imp, mapping = aes(x = Mean_Decrease_Gini, y = reorder(Feature, Mean_Decrease_Gini))) + geom_point()
+
 
 model.rf <- randomForest::randomForest(left ~ satisfaction_level + number_project + average_montly_hours + time_spend_company 
                                        + last_evaluation + department, data = df.train, verbose = TRUE)
