@@ -35,7 +35,7 @@ conf.matrix.train
 conf.matrix.test <- caret::confusionMatrix(df.test$predicted_outcome, df.test$left)
 conf.matrix.test
 
-#Feature selection in Random Forest (Backward Selection)
+#Feature selection in Random Forest (Recursive Feature Eliminaion)
 set.seed(123457)
 train_index <- caret::createDataPartition(df$department, p = 0.7, list = FALSE)
 df.train <- df[train_index,]
