@@ -36,13 +36,6 @@ df.test$predicted_outcome <- ifelse((df.test$predicted_prob > 0.5), 1, 0)
 conf.matrix.test <- caret::confusionMatrix(df.test$predicted_outcome, df.test$left)
 conf.matrix.test
 
-#ROC for Logistic regression with all predictors and 0.5 as cutoff
-roc.train <- pROC::roc(df.train$left, df.train$predicted_outcome)
-pROC::plot.roc(roc.train)
-
-roc.test1 <- pROC::roc(df.test$left, df.test$predicted_outcome)
-pROC::plot.roc(roc.test1)
-
 
 #Determining optimal cutoff
 #Plot cutoff vs accuracy
@@ -69,11 +62,9 @@ conf.matrix.train
 conf.matrix.test <- caret::confusionMatrix(df.test$predicted_outcome, df.test$left)
 conf.matrix.test
 
-#ROC for Logistic regerssion with all predictors with optimal cutoff
-roc.train <- pROC::roc(df.train$left, df.train$predicted_outcome)
-pROC::plot.roc(roc.train)
-
-roc.test1 <- pROC::roc(df.test$left, df.test$predicted_outcome)
-pROC::plot.roc(roc.test1)
-
+#ROC for Logistic regression with all predictors
+roc.train <- pROC::roc(df.train$left, df.train$predicted_prob)
+roc.test1 <- pROC::roc(df.test$left, df.test$predicted_prob)
+pROC::plot.roc(roc.train, col = "BLUE")
+pROC::plot.roc(roc.test1, add = TRUE, col = "GREEN")
 

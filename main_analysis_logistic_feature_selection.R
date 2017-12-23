@@ -78,11 +78,10 @@ conf.matrix.test <- caret::confusionMatrix(df.test$predicted_outcome, df.test$le
 conf.matrix.test
 
 #ROC for Logistic regerssion with selected predictors without dummy variables
-roc.train <- pROC::roc(df.train$left, df.train$predicted_outcome)
-pROC::plot.roc(roc.train)
-
-roc.test1 <- pROC::roc(df.test$left, df.test$predicted_outcome)
-pROC::plot.roc(roc.test1)
+roc.train <- pROC::roc(df.train$left, df.train$predicted_prob)
+roc.test1 <- pROC::roc(df.test$left, df.test$predicted_prob)
+pROC::plot.roc(roc.train, col = "BLUE")
+pROC::plot.roc(roc.test1, add = TRUE, col = "GREEN")
 
 
 #With dummy variables
@@ -131,9 +130,8 @@ conf.matrix.test <- caret::confusionMatrix(df.test$predicted_outcome, df.test$le
 conf.matrix.test
 
 #ROC for Logistic regerssion with selected predictors with dummy variables
-roc.train <- pROC::roc(df.train$left, df.train$predicted_outcome)
-pROC::plot.roc(roc.train)
-
-roc.test1 <- pROC::roc(df.test$left, df.test$predicted_outcome)
-pROC::plot.roc(roc.test1)
+roc.train <- pROC::roc(df.train$left, df.train$predicted_prob)
+roc.test1 <- pROC::roc(df.test$left, df.test$predicted_prob)
+pROC::plot.roc(roc.train, col = "BLUE")
+pROC::plot.roc(roc.test1, add = TRUE, col = "GREEN")
 
