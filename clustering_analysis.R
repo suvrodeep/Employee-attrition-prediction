@@ -37,7 +37,8 @@ for (index in 1:5) {
   results[index, 5] <- (results[index, 2] * 100) / results[index, 4]
 }
 
-
+ggplot(data = results, mapping = aes(x = results$Cluster, y = results$`Percentage Left`)) + xlab("Cluster") + 
+  ylab("Percentage") + geom_col()
 
 
 
